@@ -8,15 +8,15 @@ import tensorflow as tf
 import numpy as np
 from tensorflow.keras import layers
 from scipy.signal import convolve2d
-from IPython.display import clear_output
+#from IPython.display import clear_output
 
 
 # In[2]:
 
 
-tf.__version__
-physical_devices = tf.config.list_physical_devices('GPU')
-tf.config.experimental.set_memory_growth(physical_devices[0],True)
+#tf.__version__
+#physical_devices = tf.config.list_physical_devices('GPU')
+#tf.config.experimental.set_memory_growth(physical_devices[0],True)
 
 
 # # Creating the game/env
@@ -505,7 +505,7 @@ class human():
         return
     
     def select_action(self):
-        clear_output()
+        #clear_output()
         print("Current board")
         print(game)
         print("Available moves")
@@ -556,17 +556,25 @@ def testing(p1=pred(),p2=rand(),runs=10):
 
 # In[ ]:
 
+#simulations batch_size temperature learning_rate episodes model_struct q&z 
+for i in range(1,max_episodes+1):
+    boards, action_probs, reward = run_episode_mcts(10,20,float("inf"))
+    j = 0
+    
+    examples_size = len(reward)
+    while j < examples_size/BATCH_SIZE:
+        idx = np.random.randint(examples_size, size=BATCH_SIZE)
+        train_step_mcts(boards[idx], action_probs[idx], reward[idx])
+        j=j+1
+        
+        
+    if(i%2):
+        print(".",end="")
 
-get_ipython().run_cell_magic('time', '', '#simulations batch_size temperature learning_rate episodes model_struct q&z \nfor i in range(1,max_episodes+1):\n    boards, action_probs, reward = run_episode_mcts(10,20,float("inf"))\n    j = 0\n    \n    examples_size = len(reward)\n    while j < examples_size/BATCH_SIZE:\n        idx = np.random.randint(examples_size, size=BATCH_SIZE)\n        train_step_mcts(boards[idx], action_probs[idx], reward[idx])\n        j=j+1\n        \n        \n    if(i%2):\n        print(".",end="")\n\n    if(i%200==0):\n        print("")\n        print(testing())\n        ')
-
-
-# In[ ]:
-
-
-get_ipython().run_cell_magic('timeit', '', 'run_episode_mcts(1,20,float("inf"))')
-
-
-# # Testing
+    if(i%200==0):
+        print("")
+        print(testing())
+        
 
 # In[ ]:
 
@@ -596,60 +604,6 @@ def test(players,runs):
         res[1][winner] += 1
         
     return res
-
-
-# In[ ]:
-
-
-get_ipython().run_cell_magic('time', '', '\ntest([pred(),rand()],1000)')
-
-
-# In[ ]:
-
-
-get_ipython().run_cell_magic('time', '', '\ntest([pred(),perf()],1000)')
-
-
-# In[ ]:
-
-
-get_ipython().run_cell_magic('time', '', '\ntest([mcts_agent(temperature=1),mcts_agent(temperature=1)],100)')
-
-
-# In[ ]:
-
-
-get_ipython().run_cell_magic('time', '', '\ntest([mcts_agent(simulations=5),rand()],100)')
-
-
-# In[ ]:
-
-
-get_ipython().run_cell_magic('time', '', '\ntest([mcts_agent(simulations=10),rand()],100)')
-
-
-# In[ ]:
-
-
-get_ipython().run_cell_magic('time', '', '\ntest([mcts_agent(simulations=20),rand()],100)')
-
-
-# In[ ]:
-
-
-get_ipython().run_cell_magic('time', '', '\ntest([mcts_agent(simulations=50),rand()],100)')
-
-
-# In[ ]:
-
-
-get_ipython().run_cell_magic('time', '', '\ntest([mcts_agent(),perf()],100)')
-
-
-# In[ ]:
-
-
-get_ipython().run_cell_magic('time', '', '\ntest([mcts_agent(simulations=50),perf()],100)')
 
 
 # In[ ]:
