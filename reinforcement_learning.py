@@ -8,7 +8,7 @@ import tensorflow as tf
 import numpy as np
 from tensorflow.keras import layers
 from scipy.signal import convolve2d
-#from IPython.display import clear_output
+#from IPython.display import clear_outpu
 
 
 # In[2]:
