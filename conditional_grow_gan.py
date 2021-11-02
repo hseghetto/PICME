@@ -19,6 +19,7 @@ import os
 #from IPython import display
 
 path = "scratch/08429/hss1999/"
+#path = ""
 
 # In[2]:
 
@@ -162,7 +163,7 @@ def generator_model():
     label = layers.Input(1,)
     y = LabelEmbedding((WIDTH*HEIGHT*32,),LABEL_DIM)(label)
 
-    x = layers.Concatenate()((x,y))
+    x = layers.Concatenate()([x,y])
 
     x = layers.Reshape((WIDTH,HEIGHT,64))(x)
  
@@ -227,7 +228,7 @@ def discriminator_model():
 
     y = LabelEmbedding((WIDTH*2,HEIGHT*2,CHANNELS,),LABEL_DIM)(label)
 
-    x = layers.Concatenate()((x,y))
+    x = layers.Concatenate()([x,y])
 
     x = LeakyConv2D(64)(x)
     x = LeakyConv2D(64,strides = (2,2))(x)
@@ -253,7 +254,7 @@ def discriminator_expand(old_disc):
     label = layers.Input(1)
     y1 = LabelEmbedding((size,size,CHANNELS,),LABEL_DIM)(label)
 
-    x1 = layers.Concatenate()((x1,y1))
+    x1 = layers.Concatenate()([x1,y1])
     x1 = LeakyConv2D(64)(x1)
     x1 = LeakyConv2D(64, strides=(2,2))(x1)
 
