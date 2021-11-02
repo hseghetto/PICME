@@ -18,6 +18,7 @@ import os
 
 #from IPython import display
 
+path = "scratch/08429/hss1999/"
 
 # In[2]:
 
@@ -202,13 +203,13 @@ def generator_expand(old_gen):
 # In[9]:
 
 
-gen = generator_model()
-gen.summary()
-tf.keras.utils.plot_model(gen,to_file="gen.png")
+# gen = generator_model()
+# gen.summary()
+# tf.keras.utils.plot_model(gen,to_file="gen.png")
 
-new_gen,_ = generator_expand(gen)
-new_gen.summary()
-tf.keras.utils.plot_model(new_gen,to_file="gen_exp.png")
+# new_gen,_ = generator_expand(gen)
+# new_gen.summary()
+# tf.keras.utils.plot_model(new_gen,to_file="gen_exp.png")
 
 
 # ##Discriminator
@@ -279,15 +280,15 @@ def discriminator_expand(old_disc):
 # In[12]:
 
 
-disc = discriminator_model()
+#disc = discriminator_model()
 
-disc.summary()
-tf.keras.utils.plot_model(disc,to_file="disc.png")
+#disc.summary()
+#tf.keras.utils.plot_model(disc,to_file="disc.png")
 
-new_disc, disc = discriminator_expand(disc)
+#new_disc, disc = discriminator_expand(disc)
 
-new_disc.summary()
-tf.keras.utils.plot_model(disc,to_file="disc_exp.png")
+#new_disc.summary()
+#tf.keras.utils.plot_model(disc,to_file="disc_exp.png")
 
 
 # #Optimizer & Losses
@@ -465,7 +466,7 @@ def generate_and_save_images(epoch, test_input):
         image = PIL.Image.fromarray(image,mode)
         result.paste(im=image,box=(width*(i//4),height*(i%4)))
     
-    result.save('cg_gan/nn_{}_step_{}_epoch_{:04d}.png'.format(NN,TRAIN,epoch),"PNG")
+    result.save(path+'cg_gan/nn_{}_step_{}_epoch_{:04d}.png'.format(NN,TRAIN,epoch),"PNG")
     plt.imshow(np.asarray(result),cmap="gray")
     plt.show()
 
@@ -527,7 +528,7 @@ except:
 
 
 try:
-    os.mkdir("cg_gan")
+    os.mkdir(path+"cg_gan")
 except:
     pass
 
@@ -590,8 +591,8 @@ for i in range(10):
 # In[4]:
 
 
-fp_in = "cg_gan/nn_{}*.png".format(NN)
-fp_out = "cg_gan/nn_{}_scaled.gif".format(NN)
+fp_in = path+"cg_gan/nn_{}*.png".format(NN)
+fp_out = path+"cg_gan/nn_{}_scaled.gif".format(NN)
 
 img, *imgs = [PIL.Image.open(f) for f in sorted(glob.glob(fp_in))]
 
@@ -606,8 +607,8 @@ img.save(fp=fp_out, format='GIF', append_images=imgs,
 # In[ ]:
 
 
-fp_in = "cg_gan/nn_{}*.png".format(NN)
-fp_out = "cg_gan/nn_{}_real.gif".format(NN)
+fp_in = path+"cg_gan/nn_{}*.png".format(NN)
+fp_out = path+"cg_gan/nn_{}_real.gif".format(NN)
 
 imgs = [PIL.Image.open(f) for f in sorted(glob.glob(fp_in))]
 
