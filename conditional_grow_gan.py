@@ -18,7 +18,7 @@ import os
 
 #from IPython import display
 
-path = "scratch/08429/hss1999/"
+path = "/scratch/08429/hss1999/"
 #path = ""
 
 # In[2]:
@@ -263,10 +263,10 @@ def discriminator_expand(old_disc):
 
     y2 = old_disc.layers[3](label)
     
-    x2 = old_disc.layers[4]((x2,y2))
+    x2 = old_disc.layers[4]([x2,y2])
     x2 = old_disc.layers[5](x2)
 
-    x2 = WeightedSum()((x2,x1))
+    x2 = WeightedSum()([x2,x1])
 
     for old_layer in old_disc.layers[6:]:
         x1 = old_layer(x1)
