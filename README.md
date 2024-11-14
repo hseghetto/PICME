@@ -9,13 +9,17 @@ The repository includes .ipynb files with implementations in tensorflow and kera
 This is a simplified implementation of the network described in Mirza and Osindero (2014), which adapts the GAN framework introduced by Goodfellow et al. (2014). The key modification is the inclusion of a second input for the labels associated with each image type, enabling the generation of class-conditioned images.
 
 Results after 25 epochs:
+
 ![Results afetr 25 epochs](https://github.com/user-attachments/assets/43345dac-66d2-4630-93bb-9a3a23ec130e)
 
 Results after 50 epochs:
+
 ![Results after 50 epochs](https://github.com/user-attachments/assets/82aac72c-b4e1-4009-9d48-1ce47913789c)
 
 Training progress GIF:
+
 ![cgan](https://github.com/user-attachments/assets/71d428ae-4869-4c31-9d2b-0b76b23f51eb)
+
 The model was trained for a total of 50 epochs, with each epoch taking approximately 30 seconds. The estimated total training time was around 25 minutes. This includes image generation after each epoch.
 
 ## Progressive Growing GAN
